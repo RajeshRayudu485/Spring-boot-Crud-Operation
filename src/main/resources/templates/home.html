@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Home</title>
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+	<div align="center" id="div">
+		<h1>Employee Management Record</h1>
+		<br>
+		<h1 th:text=${success} style="color: green"></h1>
+		<a href="/add-employe"><button>Add Record</button></a> <a
+			href="/fetch-records"><button>Fetch Record</button></a> <a href="/byname"><button>Fetch
+				ByName</button></a>
+
+	</div><br>
+	<div align="center" th:if="${add}">
+		<h1>Add Employe Deatils Here ,</h1>
+		<form action="add-employe" method="post">
+			Name : <input type="text" name="name"><br>
+			<br> Mobile : <input type="tel" pattern="{0-9}[10]"
+				name="mobile"><br>
+			<br> Salary : <input type="number" name="salary"><br>
+			<br>
+			<button>Add</button>
+		</form>
+	</div> <br><br>
+	<div align="center" th:if="${fetch}">
+		<table border="1" >
+			<tr>
+				<th>Name</th>
+				<th>Mobile</th>
+				<th>Salary</th>
+				<th>Edit</th>
+				<th>Delete</th>
+			</tr>
+			<tr th:each=emp:${employe}>
+				<td th:text="${emp.name}"></td>
+				<td th:text="${emp.mobile}"></td>
+				<td th:text="${emp.salary}">Salary</td>
+				<td><a th:href="'edit?id='+${emp.id}"><button>Edit</button>
+				</a></td>
+				<td><a th:href="'delete?id='+${emp.id}"><button>Delete</button>
+				</a></td>
+			</tr>
+		</table>
+	</div>
+	<div align="center" th:if="${emp}">
+		<h1>Update Employe Deatils Here ,</h1>
+		<form action="update-record" method="post">
+			<input type="hidden" name="id" th:value="${emp.id}"> Name
+			: <input type="text" name="name" th:value="${emp.name}"><br>
+			<br> Mobile : <input type="tel" pattern="{0-9}[10]"
+				name="mobile" th:value="${emp.mobile}"><br> <br>
+			Salary : <input type="number" name="salary"
+				th:value="${emp.salary}"><br> <br>
+			<button>Update</button>
+		</form>
+	</div>
+	<div align="center" >
+	<form action="fetch-byname" th:if="${byname}">
+	Enter Name: <input type="text" name="name">
+	<button>Search</button>
+	</form>
+	</div>
+	<div align="center" th:if="${fetchbyname}">
+	<table border="1">
+	<tr>
+	<th>Id</th>
+	<th>Name</th>
+	<th>Mobile</th>
+	<th>Salary</th>
+	</tr>
+	<tr>
+	<td th:text="${fetchbyname.id}"></td>
+	<td th:text="${fetchbyname.name}"></td>
+	<td th:text="${fetchbyname.mobile}"></td>
+	<td th:text="${fetchbyname.salary}"></td>
+	</tr>
+	</table>
+	</div>
+</body>
+</html>
